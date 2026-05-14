@@ -56,6 +56,9 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST':     config('DB_HOST', default='localhost'),
         'PORT':     config('DB_PORT', default='5432'),
+        'TEST': {
+            'NAME': config('TEST_DB_NAME', default='shopapi_test_db'),
+        },
     }
 }
 
@@ -94,3 +97,6 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=False, cast=bool)
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
