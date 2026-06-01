@@ -1,0 +1,10 @@
+print("Operadores de comparación - Alertas Clínicas")
+valor_actual = float(input("Ingrese el valor actual (ej. temperatura del paciente): "))
+valor_referencia = float(input("Ingrese el valor de referencia (ej. temperatura límite normal): "))
+
+print(valor_actual, "==", valor_referencia, valor_actual==valor_referencia)
+print(valor_actual, "!=", valor_referencia, valor_actual!=valor_referencia)
+print(valor_actual, ">", valor_referencia, valor_actual>valor_referencia)
+print(valor_actual, "<", valor_referencia, valor_actual<valor_referencia)
+print(valor_actual, ">=", valor_referencia, valor_actual>=valor_referencia)
+print(valor_actual, "<=", valor_referencia, valor_actual<=valor_referencia)
