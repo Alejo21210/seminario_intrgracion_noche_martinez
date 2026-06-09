@@ -4,7 +4,12 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 from store.views.health    import health_check
-from store.views.auth      import RegisterView, LogoutView
+from store.views.auth      import (
+    RegisterView,
+    LogoutView,
+    PasswordResetRequestView,
+    PasswordResetConfirmView,
+)
 from store.views.user      import UserViewSet
 from store.views.category  import CategoryViewSet
 from store.views.product   import ProductViewSet
@@ -23,6 +28,8 @@ urlpatterns = [
     path('auth/login/',         CustomTokenView.as_view()),
     path('auth/token/refresh/', TokenRefreshView.as_view()),
     path('auth/token/verify/',  TokenVerifyView.as_view()),
-    path('auth/logout/',        LogoutView.as_view()),
+    path('auth/logout/',              LogoutView.as_view()),
+    path('auth/password-reset/',         PasswordResetRequestView.as_view()),
+    path('auth/password-reset/confirm/', PasswordResetConfirmView.as_view()),
     path('', include(router.urls)),
 ]
