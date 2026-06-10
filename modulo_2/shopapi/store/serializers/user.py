@@ -154,3 +154,17 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         user.set_password(self.validated_data['new_password'])
         user.save()
         return user
+
+
+class SendNotificationSerializer(serializers.Serializer):
+    subject = serializers.CharField(max_length=200)
+    message = serializers.CharField()
+    user_id = serializers.IntegerField(required=False, allow_null=True)
+
+    def validate_user_id(self, value):
+        if value is not None:
+            if not User.objects.filter(pk=value, is_active=True, is_staff=False).exists():
+                raise serializers.ValidationError(
+                    'Usuario no encontrado, inactivo o es staff.'
+                )
+        return value

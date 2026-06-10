@@ -71,3 +71,17 @@ def send_order_confirmation_email(order) -> None:
             'created_at': order.created_at.strftime('%d/%m/%Y %H:%M'),
         },
     )
+
+
+def send_notification_email(user, subject: str, message: str) -> None:
+    _send(
+        subject=subject,
+        to=user.email,
+        txt_template='emails/notification.txt',
+        html_template='emails/notification.html',
+        context={
+            'username': user.username,
+            'subject':  subject,
+            'message':  message,
+        },
+    )

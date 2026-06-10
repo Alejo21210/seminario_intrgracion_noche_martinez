@@ -1587,6 +1587,91 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "── PARADA 4: Notificaciones manuales ──",
+			"item": [
+				{
+					"name": "Send to single user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_staff}}" },
+							{ "key": "Content-Type",  "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject\": \"¡Promoción exclusiva para ti!\",\n  \"message\": \"Este mes tienes un 20% de descuento.\\nUsa el código PROMO20 al hacer tu pedido.\",\n  \"user_id\": {{target_user_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/emails/send/",
+							"host": ["{{base_url}}"],
+							"path": ["emails", "send", ""]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Broadcast to all non-staff users",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_staff}}" },
+							{ "key": "Content-Type",  "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject\": \"Novedades de ShopAPI\",\n  \"message\": \"Tenemos nuevos productos disponibles.\\n\\nVisita nuestro catálogo y descubre las últimas incorporaciones.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/emails/send/",
+							"host": ["{{base_url}}"],
+							"path": ["emails", "send", ""]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send without staff token (expect 403)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access}}" },
+							{ "key": "Content-Type",  "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject\": \"test\",\n  \"message\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/emails/send/",
+							"host": ["{{base_url}}"],
+							"path": ["emails", "send", ""]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send to staff user_id (expect 400)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{access_staff}}" },
+							{ "key": "Content-Type",  "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject\": \"test\",\n  \"message\": \"test\",\n  \"user_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/emails/send/",
+							"host": ["{{base_url}}"],
+							"path": ["emails", "send", ""]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"variable": [
@@ -1621,6 +1706,14 @@
 		{
 			"key": "reset_token",
 			"value": ""
+		},
+		{
+			"key": "access_staff",
+			"value": ""
+		},
+		{
+			"key": "target_user_id",
+			"value": "2"
 		}
 	]
 }

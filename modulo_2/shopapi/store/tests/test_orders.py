@@ -1,5 +1,6 @@
 # store/tests/test_orders.py
 from django.test import TestCase
+from django.core import mail
 from rest_framework import status
 
 from .helpers import (
@@ -14,6 +15,7 @@ class OrderCRUDTests(TestCase):
         self.user    = create_user('ivan')
         self.client  = auth_client(self.user)
         self.product = create_product(stock=20)
+        mail.outbox.clear()
 
     def test_create_empty_order(self):
         resp = self.client.post('/api/orders/', {})
@@ -72,6 +74,14 @@ class OrderCRUDTests(TestCase):
             {'product_id': self.product.id, 'quantity': 1}
         )
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_order_sends_confirmation_email(self):
+        resp = self.client.post('/api/orders/', {})
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(mail.outbox), 1)
+        email = mail.outbox[0]
+        self.assertIn(self.user.email, email.to)
+        self.assertIn(str(resp.data['id']), email.body)
 
 
 class OrderPermissionTests(TestCase):
