@@ -2,24 +2,47 @@
 
 import UserGreeting from "./components/UserGreeting"
 import WelcomeBanner from "./components/WelcomeBanner"
+import FruitList from "./components/FruitList"
+import DigitalCounter from "./useState/DigitalCounter"
+import UserProfileForm from "./useState/UserProfileForm"
+import TaskManager from "./useState/TaskManager"
+import DocumentTitle from "./useEffect/DocumentTitle"
+import FetchUser from "./useEffect/FetchUser"
+import FetchUsers from "./useEffect/FetchUsers"
+import AutoFocusForm from "./useRef/AutoFocusForm"
+import InlineEditor from "./useRef/InlineEditor"
 
-// ┌──────────────────────────────────────────────────────────────────────────┐
-// │  Cambia PASO y guarda (Ctrl+S) para navegar entre componentes.          │
-// │   1  WelcomeBanner       — banner estático sin props                    │
-// │   2  UserGreeting        — props string + cálculo de iniciales          │
-// │   3  CurrentDateDisplay  — fecha calculada al renderizar                │
-// │   4  ColoredBox          — estilos dinámicos con props numéricas        │
-// │   5  ConditionalGreeting — renderizado condicional + tipo unión         │
-// │   6  FruitList           — lista tipada con .map()                      │
-// │   7  PriceTag            — cálculos con props numéricas                 │
-// │   8  StatusBadge         — Record para mapear tipos a estilos           │
-// │   9  MiniProfileCard     — composición de componentes                   │
-// │  10  SimpleInfoTable     — tabla con rows tipadas                       │
-// │  11  ProductCard         — interfaz de props con opcionales y booleanas │
-// │  12  ProductCatalogList  — lista con renderizado condicional de items   │
-// │  13  UserProfileCard     — ejercicio: props complejas + rol             │
-// └──────────────────────────────────────────────────────────────────────────┘
-const PASO = 2
+// ┌──────────────────────────────────────────────────────────┐
+// │  COMPONENTES (props, renderizado)                        │
+// │   1  WelcomeBanner       — banner estático sin props     │
+// │   2  UserGreeting        — props string + iniciales      │
+// │   3  CurrentDateDisplay  — fecha al renderizar           │
+// │   4  ColoredBox          — estilos con props numéricas   │
+// │   5  ConditionalGreeting — renderizado condicional       │
+// │   6  FruitList           — lista tipada con .map()       │
+// │   7  PriceTag            — cálculos con props numéricas  │
+// │   8  StatusBadge         — Record para mapear estilos    │
+// │   9  MiniProfileCard     — composición de componentes    │
+// │  10  SimpleInfoTable     — tabla con rows tipadas        │
+// │  11  ProductCard         — props opcionales y booleanas  │
+// │  12  ProductCatalogList  — lista condicional de items    │
+// │  13  UserProfileCard     — props complejas + rol         │
+// ├──────────────────────────────────────────────────────────┤
+// │  useState                                                │
+// │  14  DigitalCounter      — tipos primitivos              │
+// │  15  UserProfileForm     — objetos                       │
+// │  16  TaskManager         — arrays                        │
+// ├──────────────────────────────────────────────────────────┤
+// │  useEffect                                               │
+// │  17  DocumentTitle       — useEffect al montar/desmontar │
+// │  18  FetchUser           — fetch con loading/error/data  │
+// │  19  FetchUsers          — fetch con ID personalizado    │
+// ├──────────────────────────────────────────────────────────┤
+// │  useRef                                                  │
+// │  20  AutoFocusForm       — focus con useRef + useEffect  │
+// │  21  InlineEditor        — input no controlado con ref   │
+// └──────────────────────────────────────────────────────────┘
+const PASO = 21
 
 const fruits = [
   { name: 'Manzana', emoji: '🍎', calories: 52 },
@@ -36,6 +59,8 @@ const catalog = [
 
 export default function App() {
   const content =
+    // ── COMPONENTES ──
+    /*
     PASO ===  1 ? <WelcomeBanner /> : 
     PASO ===  2 ? (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -43,7 +68,7 @@ export default function App() {
         <UserGreeting name="Ana García" occupation="Desarrolladora Frontend" />
         <UserGreeting name="A" />
       </div>
-    ) :/*
+    ) :
     PASO ===  3 ? <CurrentDateDisplay /> :
     PASO ===  4 ? (
       <div style={{ display: 'flex', gap: 12 }}>
@@ -53,7 +78,8 @@ export default function App() {
       </div>
     ) :
     PASO ===  5 ? <ConditionalGreeting isLoggedIn={true} userName="Ana" timeOfDay="afternoon" /> :
-    PASO ===  6 ? <FruitList fruits={fruits} title="Frutas favoritas" /> :
+*/
+    PASO ===  6 ? <FruitList fruits={fruits} title="Frutas favoritas" /> :/*
     PASO ===  7 ? (
       <div style={{ display: 'flex', gap: 24, alignItems: 'flex-end' }}>
         <PriceTag amount={99.99} currency="USD" />
@@ -98,7 +124,19 @@ export default function App() {
         skills={['TypeScript', 'React', 'Node.js']}
         bio="Desarrolladora fullstack con 5 años de experiencia."
       />
-    ) :*/
+    ) :
+*/
+    // ── useState ──
+    PASO === 14 ? <DigitalCounter label="Mi contador" /> :
+    PASO === 15 ? <UserProfileForm /> :
+    PASO === 16 ? <TaskManager /> :
+    // ── useEffect ──
+    PASO === 17 ? <DocumentTitle /> :
+    PASO === 18 ? <FetchUser /> :
+    PASO === 19 ? <FetchUsers /> :
+    // ── useRef ──
+    PASO === 20 ? <AutoFocusForm /> :
+    PASO === 21 ? <InlineEditor /> :
     <p style={{ color: '#e00' }}>Paso {PASO}: crea el componente primero</p>
 
   return (
