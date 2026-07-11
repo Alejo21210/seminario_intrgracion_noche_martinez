@@ -1,0 +1,36 @@
+import type { AuthRepository, AuthSession } from '@/domain/ports/auth.repository'
+import type { LoginDto } from '../dtos/login.dto'
+import type { RegisterDto } from '../dtos/register.dto'
+
+export class AuthUseCase {
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  login(dto: LoginDto): Promise<AuthSession> {
+    return this.authRepository.login(dto.username, dto.password)
+  }
+
+  register(dto: RegisterDto): Promise<AuthSession> {
+    return this.authRepository.register(dto.username, dto.email, dto.password)
+  }
+
+  logout(): Promise<void> {
+    return this.authRepository.logout()
+  }
+
+  async restoreSession(): Promise<AuthSession | null> {
+    const tokens = this.authRepository.getStoredTokens()
+    if (!tokens) return null
+
+    try {
+      const user = await this.authRepository.getCurrentUser()
+      return { user, tokens }
+    } catch {
+      this.authRepository.clearLocalSession()
+      return null
+    }
+  }
+
+  clearLocalSession(): void {
+    this.authRepository.clearLocalSession()
+  }
+}
