@@ -8,6 +8,10 @@ interface DjangoErrorResponse {
 }
 
 export function parseApiError(error: unknown): ApiException {
+  if (error instanceof ApiException) {
+    return error
+  }
+
   const axiosErr = error as AxiosError<DjangoErrorResponse>
   if (!axiosErr.response) {
     return new ApiException(0, 'No se pudo conectar con el servidor. Verifica tu conexión.')
