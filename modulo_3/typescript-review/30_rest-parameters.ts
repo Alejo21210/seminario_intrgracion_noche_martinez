@@ -1,0 +1,46 @@
+// B.2 · Rest parameters ...nums: number[]
+
+// El rest parameter SIEMPRE es el último
+function sumarTodos(...nums: number[]): number {
+  return nums.reduce((acc, n) => acc + n, 0);
+}
+
+console.log(sumarTodos(1, 2, 3));          // 6
+console.log(sumarTodos(10, 20, 30, 40));   // 100
+console.log(sumarTodos());                 // 0
+
+// Combinado con parámetros normales
+function construirRuta(base: string, ...segmentos: string[]): string {
+  return [base, ...segmentos].join("/");
+}
+
+console.log(construirRuta("https://api.ejemplo.com", "v1", "usuarios", "42"));
+// https://api.ejemplo.com/v1/usuarios/42
+
+// Ejemplo aplicado — sistema de registro de eventos
+function registrarEvento(tipo: string, ...detalles: string[]): void {
+  const timestamp = new Date().toLocaleTimeString();
+  const cuerpo = detalles.length > 0 ? ` | ${detalles.join(" · ")}` : "";
+  console.log(`[${timestamp}] ${tipo.toUpperCase()}${cuerpo}`);
+}
+
+registrarEvento("inicio");
+// [10:05:01] INICIO
+
+registrarEvento("login", "usuario: ana", "ip: 192.168.1.10");
+// [10:05:02] LOGIN | usuario: ana · ip: 192.168.1.10
+
+registrarEvento("error", "módulo: pagos", "código: 503", "reintento: sí");
+// [10:05:03] ERROR | módulo: pagos · código: 503 · reintento: sí
+
+// Mini-ejercicio — máximo y mínimo
+function maximo(primero: number, ...resto: number[]): number {
+  return Math.max(primero, ...resto);
+}
+
+function minimo(primero: number, ...resto: number[]): number {
+  return Math.min(primero, ...resto);
+}
+
+console.log(maximo(3, 1, 4, 1, 5, 9, 2, 6));  // 9
+console.log(minimo(3, 1, 4, 1, 5, 9, 2, 6));  // 1
